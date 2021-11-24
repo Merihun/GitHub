@@ -7,3 +7,7 @@ AWS access keys
 API keys
 Credit card numbers
 PIN numbers
+
+## Adding a project to GitHub with GitHub CLI
+GitHub CLI is an open source tool for using GitHub from your computer's command line. GitHub CLI can simplify the process of adding an existing project to GitHub using the command line. 
+
