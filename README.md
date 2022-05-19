@@ -197,3 +197,22 @@ For example,
 4. Alternatively, to skip the prompts supply the repository name and a visibility flag (--public, --private, or --internal). 
 
 For example, ```gh repo create project-name --public```. To clone the repository locally, pass the --clone flag.
+```
+# create a repository interactively
+gh repo create
+
+# create a new remote repository and clone it locally
+gh repo create my-project --public --clone
+
+# create a remote repository from the current directory
+gh repo create my-project --private --source=. --remote=upstream
+```
+
+```
+# Create a repository for the current directory.
+~/Projects/my-project$ gh repo create
+✓ Created repository user/my-project on GitHub
+✓ Added remote https://github.com/user/my-project.git
+~/Projects/my-project$
+```
+
