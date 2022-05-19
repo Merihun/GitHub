@@ -164,9 +164,36 @@ $ git config user.name
 ```
 > Mona Lisa
 
+# GitHub CLI
+
+GitHub CLI is an open source tool for using GitHub from your computer's command line. When you're working from the command line, you can use the GitHub CLI to save time and avoid switching context.
+
+GitHub CLI includes GitHub features such as:
+
+- View, create, clone, and fork repositories
+- Create, close, edit, and view issues and pull requests
+- Review, diff, and merge pull requests
+- Run, view, and list workflows
+- Create, list, view, and delete releases
+- Create, edit, list, view, and delete gists
+- List, create, delete, and connect to a codespace
+
+```gh``` is GitHub on the command line. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with ```git``` and your code.
+
+1. Install GitHub CLI on macOS, Windows, or Linux.
+2. In the command line, authenticate to GitHub.
+``` gh auth login ```
+3. Start working with GitHub in the command line. 
+
+For example, 
+- find an issue to work on with ```gh issue status``` or ```gh issue list --assignee @me```. 
+- Create a pull request with ```gh pr create```. 
+- Review a pull request with ```gh pr checkout```, ```gh pr diff and gh pr review```.
 
 # Create a Repository
 1. In the command line, navigate to the directory where you would like to create a local clone of your new project.
 2. To create a repository for your project, use the ```gh repo create``` subcommand. When prompted, select Create a new repository on GitHub from scratch and enter the name of your new project. If you want your project to belong to an organization instead of to your personal account, specify the organization name and project name with organization-name/project-name.
-Follow the interactive prompts. To clone the repository locally, confirm yes when asked if you would like to clone the remote project directory.
-Alternatively, to skip the prompts supply the repository name and a visibility flag (--public, --private, or --internal). For example, gh repo create project-name --public. To clone the repository locally, pass the --clone flag. For more information about possible arguments, see the GitHub CLI manual.
+3. Follow the interactive prompts. To clone the repository locally, confirm yes when asked if you would like to clone the remote project directory.
+4. Alternatively, to skip the prompts supply the repository name and a visibility flag (--public, --private, or --internal). 
+
+For example, ```gh repo create project-name --public```. To clone the repository locally, pass the --clone flag.
