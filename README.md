@@ -23,6 +23,120 @@ PIN numbers
 ## Adding a project to GitHub with GitHub CLI
 GitHub CLI is an open source tool for using GitHub from your computer's command line. GitHub CLI can simplify the process of adding an existing project to GitHub using the command line. (... to add more notes to this)
 
+# Connect with SSH
+Using the SSH protocol, you can connect and authenticate to remote servers and services. With SSH keys, you can connect to GitHub without supplying your username and personal access token at each visit.
+
+# Checking for existing SSH keys
+Before you generate an SSH key, you can check to see if you have any existing SSH keys.
+
+1. Open Terminal.
+2. Enter ls -al ~/.ssh to see if existing SSH keys are present.
+```
+$ ls -al ~/.ssh
+# Lists the files in your .ssh directory, if they exist
+```
+
+```
+3. Check the directory listing to see if you already have a public SSH key. By default, the filenames of supported public keys for GitHub are one of the following.
+id_rsa.pub
+id_ecdsa.pub
+id_ed25519.pub
+```
+
+4. Either generate a new SSH key or upload an existing key.
+If you don't have a supported public and private key pair, or don't wish to use any that are available, generate a new SSH key.
+If you see an existing public and private key pair listed (for example, id_rsa.pub and id_rsa) that you would like to use to connect to GitHub, you can add the key to the ssh-agent.
+
+# Generating a new SSH key and adding it to the ssh-agent
+After you've checked for existing SSH keys, you can generate a new SSH key to use for authentication, then add it to the ssh-agent.
+1. Open Terminal.
+2. Paste the text below, substituting in your GitHub email address.
+
+```
+$ ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
+> Enter a file in which to save the key (/Users/you/.ssh/id_algorithm): [Press enter]
+At the prompt, type a secure passphrase.
+
+```
+> Enter passphrase (empty for no passphrase): [Type a passphrase]
+> Enter same passphrase again: [Type passphrase again]
+```
+
+When adding your SSH key to the agent, use the default macOS ssh-add command, and not an application installed by macports, homebrew, or some other external source.
+
+1. Start the ssh-agent in the background.
+```
+$ eval "$(ssh-agent -s)"
+> Agent pid 59566
+```
+Depending on your environment, you may need to use a different command. For example, you may need to use root access by running sudo -s -H before starting the ssh-agent, or you may need to use exec ssh-agent bash or exec ssh-agent zsh to run the ssh-agent.
+
+2. If you're using macOS Sierra 10.12.2 or later, you will need to modify your ~/.ssh/config file to automatically load keys into the ssh-agent and store passphrases in your keychain.
+. First, check to see if your ~/.ssh/config file exists in the default location.
+```
+$ open ~/.ssh/config
+> The file /Users/you/.ssh/config does not exist.
+```
+. If the file doesn't exist, create the file.
+```
+$ touch ~/.ssh/config
+```
+. Open your ~/.ssh/config file, then modify the file to contain the following lines. If your SSH key file has a different name or path than the example code, modify the filename or path to match your current setup.
+```
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  
+```
+3. Add your SSH private key to the ssh-agent and store your passphrase in the keychain. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_ed25519 in the command with the name of your private key file.
+```
+$ ssh-add -K ~/.ssh/id_ed25519
+```
+4. Add the SSH key to your account on GitHub.
+
+Copy the SSH public key to your clipboard.
+If your SSH public key file has a different name than the example code, modify the filename to match your current setup. When copying your key, don't add any newlines or whitespace.
+```
+$ pbcopy < ~/.ssh/id_ed25519.pub
+# Copies the contents of the id_ed25519.pub file to your clipboard
+```
+2. In the upper-right corner of any page, click your profile photo, then click Settings.
+3. In the "Access" section of the sidebar, click  SSH and GPG keys.
+4. Click New SSH key or Add SSH key.
+5. In the "Title" field, add a descriptive label for the new key. For example, if you're using a personal Mac, you might call this key "Personal MacBook Air".
+6. Paste your key into the "Key" field.
+7. Click Add SSH key.
+8. If prompted, confirm your GitHub password.
+
+# Testing your SSH connection
+
+Open Terminal.
+Enter the following:
+```
+$ ssh -T git@github.com
+# Attempts to ssh to GitHub
+```
+You may see a warning like this:
+```
+> The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+> RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+> Are you sure you want to continue connecting (yes/no)?
+```
+3. Verify that the fingerprint in the message you see matches GitHub's public key fingerprint. If it does, then type yes:
+```
+> Hi username! You've successfully authenticated, but GitHub does not
+> provide shell access.
+```
+4. Verify that the resulting message contains your username.
+
+
+
+
+
+
 # Setting your Git username for every repository on your computer
 
 Open Terminal.
@@ -49,3 +163,10 @@ Confirm that you have set the Git username correctly:
 $ git config user.name
 ```
 > Mona Lisa
+
+
+# Create a Repository
+1. In the command line, navigate to the directory where you would like to create a local clone of your new project.
+2. To create a repository for your project, use the ```gh repo create``` subcommand. When prompted, select Create a new repository on GitHub from scratch and enter the name of your new project. If you want your project to belong to an organization instead of to your personal account, specify the organization name and project name with organization-name/project-name.
+Follow the interactive prompts. To clone the repository locally, confirm yes when asked if you would like to clone the remote project directory.
+Alternatively, to skip the prompts supply the repository name and a visibility flag (--public, --private, or --internal). For example, gh repo create project-name --public. To clone the repository locally, pass the --clone flag. For more information about possible arguments, see the GitHub CLI manual.
