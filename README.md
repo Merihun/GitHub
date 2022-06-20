@@ -215,4 +215,46 @@ gh repo create my-project --private --source=. --remote=upstream
 ✓ Added remote https://github.com/user/my-project.git
 ~/Projects/my-project$
 ```
+# How to Switch Git Branch
 
+## Switch Branch using git checkout
+
+The easiest way to switch branch on Git is to use the “git checkout” command and specify the name of the branch you want to switch to.
+
+If the destination branch does not exist, you have to append the “-b” option, otherwise you won’t be able to switch to that branch.
+```
+$ git checkout <existing_branch>
+
+$ git checkout -b <new_branch>
+```
+As an example, let’s say that you want to switch to the master branch to another branch named “feature” in your repository.
+
+First, make sure that the target branch exists by running the “git branch” command.
+
+``` $ git branch ```
+
+## Switch branch using git switch
+
+A quick way of switching branch on Git is to use the “git switch” command and specify the name of the branch you want to switch to.
+
+If the destination branch does not exist, you have to specify the “-c” option (for “create branch“), otherwise you will get an error message when switching to that branch.
+
+$ git switch <existing_branch>
+
+$ git switch -c <non_existing_branch>
+
+Again, as an example, let’s say that you want to switch to the “feature” branch from the “master” branch.
+
+In order to switch from the “master” branch to the “feature” branch, use the “git switch” command and specify the destination branch (which is “feature” in this case)
+
+``` $ git switch feature ```
+
+## Checkout Remote Branch on Git
+
+In some cases, you may be interested in checking out remote branches from your distant repository.
+
+In order to switch to a remote branch, make sure to fetch your remote branch with “git fetch” first. You can then switch to it by executing “git checkout” with the “-t” option and the name of the branch.
+
+$ git fetch
+
+$ git checkout -t <remote_name>/<branch_name>
