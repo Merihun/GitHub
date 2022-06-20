@@ -254,7 +254,43 @@ In order to switch from the “master” branch to the “feature” branch, use
 In some cases, you may be interested in checking out remote branches from your distant repository.
 
 In order to switch to a remote branch, make sure to fetch your remote branch with “git fetch” first. You can then switch to it by executing “git checkout” with the “-t” option and the name of the branch.
-
+```
 $ git fetch
 
 $ git checkout -t <remote_name>/<branch_name>
+
+```
+
+The “-t” option in checkout stands for “track” and it is used to create your branch and setting up the upstream branch automatically to the remote branch.
+
+## Checkout New Branch from Specific Commit
+
+In some cases, you may need to switch to a new branch, but you want it to start from a specific commit on the branch.
+
+In order to checkout a new branch from a specific start point, you have to execute the “git checkout” command and specify the “-B” option, as well as the branch and its start point.
+```
+$ git checkout -B <branch> <start_point>
+
+```
+In order to checkout to a specific start point, you will have to list the commits done in you repository using the “git log” command.
+
+```
+$ git log --oneline --graph
+
+* 98a14be Version 2 commit (master, HEAD)
+* 53a7dcf Version 1.0 commit
+* 0a9e448 added files
+```
+The HEAD of the master branch is at 98a14be but we want to checkout to the commit just before HEAD (which is 53a7dcf).
+
+In order to switch to the master branch, on this specific commit, we are going to execute the “git checkout” command and specify the “master” branch as well as the commit SHA.
+```
+$ git checkout -B master 53a7dcf 
+
+Switched to and reset branch 'master'
+* bd6903f first commit
+```
+
+In order to check that you are correctly on a specific commit, you can use the “git log” command again.
+
+``` $ git log --oneline --graph ```
