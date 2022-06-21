@@ -313,3 +313,38 @@ In order to add all deleted and modified files only to your staging area, you ha
 $ git add -u
 
 ```
+## Merging branch to master
+
+To create a new branch, we can use the ``` git branch new-branch ``` command. This will create a new branch mirroring the commits on the currently active branch:
+```
+$ git branch new-branch
+$ git branch
+* master
+new-branch
+```
+As a brief aside, keep in mind that behind the scenes Git does not actually create a new set of commits to represent the new branch. In Git, a branch is really just a tag. It is a label that we can use to reference a particular string of commits. It would be inefficient to duplicate a set of commits behind the scenes, so Git allows us to create multiple diverging sets of commits from a single base.
+
+At this point we have created a new branch, but are still located on the source branch. To start working on the new branch we first need to run the command git checkout new-branch. This will change the active branch to the new branch:
+```
+$ git checkout new-branch
+Switched to branch ‘new-branch'
+$ git branch
+master
+* new-branch
+```
+At this point, commits can be made on the new branch to implement the new feature. Once the feature is complete, the branch can be merged back into the main code branch.
+
+First we run ``` git checkout master ``` to change the active branch back to the master branch. Then we run the command ``` git merge new-branch ``` to merge the new feature into the master branch.
+
+If you're merging a new feature into the main branch, you first want to switch to the main branch and then merge into it:
+
+# ...develop some code...
+
+```
+$ git add –A
+$ git commit –m "Some commit message"
+$ git checkout master
+Switched to branch 'master'
+$ git merge new-branch
+
+```
