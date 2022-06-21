@@ -294,3 +294,22 @@ Switched to and reset branch 'master'
 In order to check that you are correctly on a specific commit, you can use the “git log” command again.
 
 ``` $ git log --oneline --graph ```
+
+# Add All Files using Git Add
+
+The easiest way to add all files to your Git repository is to use the “git add” command followed by the “-A” option for “all”.
+```
+$ git add -A                       
+
+$ git add .                        (at the root of your project folder)
+```
+
+In this case, the new (or untracked), deleted and modified files will be added to your Git staging area. We also say that they will be staged.
+
+## Adding deleted and modified files only
+
+In order to add all deleted and modified files only to your staging area, you have to use the “git add” command followed by the “-u” option.
+```
+$ git add -u
+
+```
