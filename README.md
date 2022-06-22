@@ -379,3 +379,7 @@ For example: ``` git push origin :fix/authentication ```
 
 If you get the error below, it may mean that someone else has already deleted the branch.
   ```error: unable to push to unqualified destination: remoteBranchName The destination refspec neither matches an existing ref on the remote nor begins with refs/, and we are unable to guess a prefix based on the source ref. error: failed to push some refs to 'git@repository_name' ```
+Try to synchronize your branch list using:
+
+``` git fetch -p ```
+The -p flag means "prune". After fetching, branches which no longer exist on the remote will be deleted.
