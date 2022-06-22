@@ -20,6 +20,46 @@ API keys
 Credit card numbers
 PIN numbers
 
+# Verify git version
+``` $ git version ```
+
+# git init
+This is probably the first command you use to start a new project in Git. This command will create a blank new repository, and then you can store your source code inside this repo.
+
+Usage  
+
+``` $ git init 
+
+Or you can use the repository name with your git init command.
+
+$ git init <your repository name>
+
+```
+# git checkout
+This Git command is used to switch between branches. This is one of the powerful git commands and can use used as a swiss knife, 
+
+In simple words, here is the syntax to switch to another branch.
+
+Usage
+
+``` $ git checkout <branch_name> ```
+
+Also, you can create and checkout to a branch in a single like, here is the usage for that 
+
+``` $ git checkout -b <your_new_branch_name> ```
+# git remote
+Git remote command acts like a border, and If you need to connect with the outside world, you have to use the Git remote command. This command will connect your local repository to the remote. 
+
+Usage 
+
+$ git remote add <shortname> <url>
+
+
+Example
+
+$ git remote add origin https://dev.azure.com/aCompiler/_git/DemoProject
+  
+  
 ## Adding a project to GitHub with GitHub CLI
 GitHub CLI is an open source tool for using GitHub from your computer's command line. GitHub CLI can simplify the process of adding an existing project to GitHub using the command line. (... to add more notes to this)
 
