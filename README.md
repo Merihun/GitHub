@@ -93,55 +93,102 @@ If you see an existing public and private key pair listed (for example, id_rsa.p
 
 # Generating a new SSH key and adding it to the ssh-agent
 After you've checked for existing SSH keys, you can generate a new SSH key to use for authentication, then add it to the ssh-agent.
+  
+Here are the steps for setting up SSH for Git operations:
+1. Generate a new SSH key on your computer (or use an existing SSH key)
+2. Add the SSH key to the ssh-agent
+3. Add the SSH key to your Github account
+ 
+If you already have an existing SSH key on your computer, you can use that key to connect to your Github account, instead of generating a new SSH key.
+If you want to use this existing key to connect to your Github account, you can go straight to step 2: Add the SSH key to the ssh-agent.
+
+- To check if you have an existing SSH key, type in the following command in your terminal:
+``` ls -al ~/.ssh ```
+ 
+If you do have one or more existing SSH keys, they will be stored inside the .ssh folder in your root directory, e.g. like below:
+  
+```
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+  
+```
+- In the above example we have noticed different keywords in the names of the SSH key files: e.g. rsa and ed25519 in the above examples. 
+- These represent the type of encryption algorithm used for the SSH key. 
+- It is widely recommended (also by Github) that you use ed25519 encryption for your SSH keys.
+- Each SSH key is in pairs of private & public keys. 
+- The private key is the one you should never share with anyone but just keep in your local machine. 
+- The public key is the one you will be adding to your Github account.
+  
+  id_rsa is a private key
+  id_rsa.pub is a public key
+Follow the below steps to generate an SSH key on your computer
+  
 1. Open Terminal.
 2. Paste the text below, substituting in your GitHub email address.
 
 ```
 $ ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
+replace your_email@example.com with your Github account email
+-C flag sets a comment or label for identifying your SSH key, and using your email as the comment is a common practice
+-t ed25519 sets the encryption algorithm for your SSH key to ed25519
+
 When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
-> Enter a file in which to save the key (/Users/you/.ssh/id_algorithm): [Press enter]
-At the prompt, type a secure passphrase.
+3. Enter a file in which to save the key (/Users/you/.ssh/id_algorithm): [Press enter]
+  
+4. Enter a passphrase for your key [optional]
 
 ```
 > Enter passphrase (empty for no passphrase): [Type a passphrase]
 > Enter same passphrase again: [Type passphrase again]
 ```
-
+# Add the SSH key to the ssh-agent
+  
 When adding your SSH key to the agent, use the default macOS ssh-add command, and not an application installed by macports, homebrew, or some other external source.
 
 1. Start the ssh-agent in the background.
+  
 ```
 $ eval "$(ssh-agent -s)"
 > Agent pid 59566
 ```
-Depending on your environment, you may need to use a different command. For example, you may need to use root access by running sudo -s -H before starting the ssh-agent, or you may need to use exec ssh-agent bash or exec ssh-agent zsh to run the ssh-agent.
+  (or)
+```
+exec ssh-agent zsh
+```
+  
+Replace zsh with bash or whichever shell you are using.
 
-2. If you're using macOS Sierra 10.12.2 or later, you will need to modify your ~/.ssh/config file to automatically load keys into the ssh-agent and store passphrases in your keychain.
-. First, check to see if your ~/.ssh/config file exists in the default location.
+  
+2. Add your SSH private key to the ssh-agent and store your passphrase in the keychain. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_ed25519 in the command with the name of your private key file.
 ```
-$ open ~/.ssh/config
-> The file /Users/you/.ssh/config does not exist.
+$ ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 ```
-. If the file doesn't exist, create the file.
-```
-$ touch ~/.ssh/config
-```
-. Open your ~/.ssh/config file, then modify the file to contain the following lines. If your SSH key file has a different name or path than the example code, modify the filename or path to match your current setup.
+- ```--apple-use-keychain``` flag is Apple’s standard version of ssh-add . This adds the passphrase of your SSH key automatically to the keychain so that you don’t have to enter the passphrase every time you make an SSH connection (previously, the flag was -K)
+- If you have not set a passphrase for your key, you can omit the --apple-use-keychain flag
+- Replace id_ed25519 with the name of your own SSH key
+  
+3. Set up the config file for some convenient options
+
+You can set up a config file for SSH with various options. For our purposes, let’s take a look at two options that will be useful:
+- Automatically add your SSH key to the ssh-agent
+- Store your passphrase in the keychain
+- If you don’t already have the config file inside your /.ssh folder, create one:
+``` touch ~/.ssh/config ```
+Then, open the config file and paste the following:
 ```
 Host *
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_ed25519
+```
+- Replace the SSH key name (id_ed25519) as needed
   
-```
-3. Add your SSH private key to the ssh-agent and store your passphrase in the keychain. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_ed25519 in the command with the name of your private key file.
-```
-$ ssh-add -K ~/.ssh/id_ed25519
-```
 4. Add the SSH key to your account on GitHub.
 
-Copy the SSH public key to your clipboard.
+1. Copy the SSH public key to your clipboard.
 If your SSH public key file has a different name than the example code, modify the filename to match your current setup. When copying your key, don't add any newlines or whitespace.
 ```
 $ pbcopy < ~/.ssh/id_ed25519.pub
