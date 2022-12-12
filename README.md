@@ -2,7 +2,11 @@
 
 ## What is Git?
 
-Git is a Version Control System (VCS) that keeps track of all the changes to your project files, allowing you to work with your team on the same code while saving you a lot of confusion that tends to happen when multiple people are editing the same files. Git stores every record of every change that you or someone else makes to the project, and this makes keeping track of your progress easy. If you need to look at your old code, or if you need to see what or who modified it – the record is always there.
+- Git is a Version Control System (VCS) 
+- Git keeps track of all the changes to your project files, allowing you to work with your team on the same code. 
+- Avoids a lot of confusion that tends to happen when multiple people are editing the same files. 
+- Stores every record of every change that you or someone else makes to the project, and this makes keeping track of your progress easy. 
+- Helps to look back at your old code, or if you need to see what or who modified it.
 
 ## What is GitHub
 GitHub acts as remote storage for your Git repositories and provides a really neat and simple way for people to collaborate and contribute to development projects.
